@@ -11,7 +11,6 @@
 - Perfil detallado de prestadores de servicios.
 - Sistema de calificaciones y comentarios.
 - Chat directo entre cliente y proveedor.
-- **Chat inteligente integrado con GPT** para resolver dudas o asistir a los usuarios.
 - Métodos de pago seguros e integrados.
 - Panel de administración para gestionar usuarios y servicios.
 
@@ -23,10 +22,10 @@
 - **Backend:** Node.js / Express  
 - **Base de datos:** PostgreSQL  
 - **Autenticación:** JWT  
-- **Chat GPT:** Integración con OpenAI API  
-- **Deploy:** Netlify (frontend) /  (backend)
+- **Deploy:** Netlify (frontend) / (backend)
 
 ---
 
 ## 🧪 Estado del proyecto
-🚧Proyecto en desarrollo. Se encuentra en etapa de implementación de MVP. 
+
+🚧 Proyecto en desarrollo. Se encuentra en etapa de implementación de MVP.
