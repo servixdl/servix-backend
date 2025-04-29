@@ -1,5 +1,5 @@
 import pgk from "pg";
-import  {envs}  from "./config/envs.js";
+import  {envs}  from "../envs.js";
 
 
 const {Pool} = pgk;
