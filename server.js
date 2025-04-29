@@ -5,8 +5,9 @@ import {findError} from "./src/utils/find.error.utils.js"
 const app = express()
 const port = envs.port
 
+app.use(cors())
 app.use(express.json());
-
+app.use('/',routes)
 try {
     app.listen(port, () => {
       console.log(`🚀 Servidor corriendo en el puerto: ${port}`);
