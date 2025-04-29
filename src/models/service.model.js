@@ -4,7 +4,7 @@ const getAll = async()=>{
     try{
         const query = 'SELECT * FROM servicios';
         const {rows: result} = await pool.query(query);
-        return consultaCompleta;
+        return result;
     }catch(error){console.log("error al obtener servicios")}
 }
 
