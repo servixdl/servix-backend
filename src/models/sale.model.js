@@ -21,9 +21,9 @@ const getById = async(id)=>{
         throw error
     }
 }
-const create = async(venta)=>{
+const create = async(sale)=>{
     try{
-        let {usuario_id,servicio_id,fecha_venta,total} = venta;
+        let {usuario_id,servicio_id,fecha_venta,total} = sale;
         const values = [usuario_id,servicio_id,fecha_venta,total]
         const query =`INSERT INTO ventas (usuario_id,servicio_id,fecha_venta,total) VALUES ($1,$2,$3,$4) `    
         await pool.query(query,values)
@@ -33,9 +33,9 @@ const create = async(venta)=>{
     }
 }
 
-const update = async (id, venta) =>{
+const update = async (id, sale) =>{
     try {
-        const { usuario_id,servicio_id,fecha_venta,total } = venta;
+        const { usuario_id,servicio_id,fecha_venta,total } = sale;
         const result = await pool.query(
           `UPDATE ventas SET usuario_id = $1, servicio_id = $2, fecha_venta = $3, total = $4 WHERE id_venta = $5 RETURNING *`,
           [usuario_id,servicio_id,fecha_venta,total, id]
