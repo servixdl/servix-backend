@@ -46,10 +46,10 @@ const updateService = async (id, service) =>{
   }
   
   
-const getByName = async(palabra)=>{
+const getByName = async(word)=>{
     try {
         const query = `SELECT * FROM servicios s JOIN tipo_servicio ts ON s.tipo_servicio_id = ts.id_tipo_servicio WHERE LOWER(s.nombre) LIKE LOWER($1)`;
-        const result = await pool.query(query,[`%${palabra}%`]);
+        const result = await pool.query(query,[`%${word}%`]);
         return result.rows;
     } catch (error) {
         console.log("error al buscar por nombre")
