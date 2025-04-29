@@ -36,7 +36,7 @@ const create = async(venta)=>{
 const update = async (id, venta) =>{
     try {
         const { usuario_id,servicio_id,fecha_venta,total } = venta;
-        const resulresulttado = await pool.query(
+        const result = await pool.query(
           `UPDATE ventas SET usuario_id = $1, servicio_id = $2, fecha_venta = $3, total = $4 WHERE id_venta = $5 RETURNING *`,
           [usuario_id,servicio_id,fecha_venta,total, id]
         );
@@ -50,8 +50,8 @@ const update = async (id, venta) =>{
 const destroy= async(servicio_id)=>{
     try{
         const query = `DELETE FROM ventas WHERE id_venta = $1 RETURNING  *`;
-        const resultado =  await pool.query(query,[servicio_id]);
-        return resultado.rows[0]
+        const result =  await pool.query(query,[servicio_id]);
+        return result.rows[0]
     }catch(error){
         console.log("error al eliminar venta")
         throw error
