@@ -21,8 +21,8 @@ const create = async(service)=>{
     try{
         let {nombre,precio,descripcion,tipo_servicio_id,usuario_id} = service;
         const values = [nombre,precio,descripcion,tipo_servicio_id,usuario_id]
-        const consulta =`INSERT INTO servicios (nombre,precio,descripcion,tipo_servicio_id,usuario_id) VALUES ($1,$2,$3,$4,$5) `    
-        await pool.query(consulta,values)
+        const query =`INSERT INTO servicios (nombre,precio,descripcion,tipo_servicio_id,usuario_id) VALUES ($1,$2,$3,$4,$5) `    
+        await pool.query(query,values)
     }catch(error){
         console.log("error al registrar el servicio",error)
         throw error;
@@ -48,9 +48,9 @@ const updateService = async (id, service) =>{
   
 const getByName = async(palabra)=>{
     try {
-        const consulta = `SELECT * FROM servicios s JOIN tipo_servicio ts ON s.tipo_servicio_id = ts.id_tipo_servicio WHERE LOWER(s.nombre) LIKE LOWER($1)`;
-        const resultado = await pool.query(consulta,[`%${palabra}%`]);
-        return resultado.rows;
+        const query = `SELECT * FROM servicios s JOIN tipo_servicio ts ON s.tipo_servicio_id = ts.id_tipo_servicio WHERE LOWER(s.nombre) LIKE LOWER($1)`;
+        const result = await pool.query(query,[`%${palabra}%`]);
+        return result.rows;
     } catch (error) {
         console.log("error al buscar por nombre")
         throw error
