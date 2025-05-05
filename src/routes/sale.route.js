@@ -1,19 +1,19 @@
-import {Router} from 'express';
-import { salesControllers } from '../controller/sale.controller.js';
-import { permission } from '../utils/auth.js';
+import { Router } from "express";
+import { salesControllers } from "../controller/sale.controller.js";
+import { verifyToken } from "../middleware/auth.js";
 
-const salesRoute = Router()
+const salesRoute = Router();
 
-salesRoute.post("/",permission.verifyToken,salesControllers.createSale)
+salesRoute.post("/", verifyToken, salesControllers.createSale);
 
-salesRoute.get("/",permission.verifyToken,salesControllers.getAllSales)
+salesRoute.get("/", verifyToken, salesControllers.getAllSales);
 
-salesRoute.get("/seller/:rut",permission.verifyToken,salesControllers.searchByRutSale)
+salesRoute.get("/seller/:rut", verifyToken, salesControllers.searchByRutSale);
 
-salesRoute.get("/:id",permission.verifyToken,salesControllers.getByIdSale)
+salesRoute.get("/:id", verifyToken, salesControllers.getByIdSale);
 
-salesRoute.put("/:id",permission.verifyToken,salesControllers.updateSale)
+salesRoute.put("/:id", verifyToken, salesControllers.updateSale);
 
-salesRoute.delete("/:id",permission.verifyToken,salesControllers.deleteSale)
+salesRoute.delete("/:id", verifyToken, salesControllers.deleteSale);
 
-export default salesRoute
+export default salesRoute;

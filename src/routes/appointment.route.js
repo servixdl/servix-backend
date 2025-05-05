@@ -1,21 +1,38 @@
-import { permission } from "../utils/auth.js";
+import { verifyToken } from "../middleware/auth.js";
 import { appointmentController } from "../controller/appointment.controller.js";
-import {Router} from 'express';
+import { Router } from "express";
 const appointmentRoute = Router();
 
+appointmentRoute.post(
+  "/",
+  verifyToken,
+  appointmentController.createAppointment
+);
 
-appointmentRoute.post("/",permission.verifyToken,appointmentController.createAppointment)
+appointmentRoute.get("/", verifyToken, appointmentController.getAllAppointment);
 
-appointmentRoute.get("/",permission.verifyToken,appointmentController.getAllAppointment)
+appointmentRoute.get(
+  "/user/:rut",
+  verifyToken,
+  appointmentController.searchByRutAppointment
+);
 
-appointmentRoute.get("/user/:rut",permission.verifyToken,appointmentController.searchByRutAppointment)
+appointmentRoute.get(
+  "/:id",
+  verifyToken,
+  appointmentController.getByIdAppointment
+);
 
-appointmentRoute.get("/:id",permission.verifyToken,appointmentController.getByIdAppointment)
+appointmentRoute.put(
+  "/:id",
+  verifyToken,
+  appointmentController.updateAppointment
+);
 
-appointmentRoute.put("/:id",permission.verifyToken,appointmentController.updateAppointment)
-
-appointmentRoute.delete("/:id",permission.verifyToken,appointmentController.deleteAppointment)
+appointmentRoute.delete(
+  "/:id",
+  verifyToken,
+  appointmentController.deleteAppointment
+);
 
 export default appointmentRoute;
-
-
