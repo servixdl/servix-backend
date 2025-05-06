@@ -13,6 +13,6 @@ userRoute.put("/:rut", verifyToken, userControllers.updateUser);
 
 userRoute.delete("/:rut", verifyToken, userControllers.deleteUser);
 
-userRoute.post("/", userControllers.registerUser);
+userRoute.post("/register", userControllers.registerUser);
 
 export default userRoute;
