@@ -16,7 +16,7 @@ const getAllRegion = async()=>{
 
 const getComuneByRegion = async(id)=>{
     try {
-        const query = `SELECT nombre FROM comuna WHERE region_id = $1`
+        const query = `SELECT nombre,id FROM comuna WHERE region_id = $1`
         const result = await pool.query(query,[id])
         return result.rows
     } catch (error) {
