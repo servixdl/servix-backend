@@ -24,9 +24,9 @@ const getById = async (id_servicio) => {
 
 const create = async (service) => {
   try {
-    let { nombre, precio, descripcion, tipo_servicio_id, usuario_id } = service;
-    const values = [nombre, precio, descripcion, tipo_servicio_id, usuario_id];
-    const query = `INSERT INTO servicios (nombre,precio,descripcion,tipo_servicio_id,usuario_id) VALUES ($1,$2,$3,$4,$5) `;
+    let { nombre, precio, descripcion, imagen,tipo_servicio_id, usuario_id } = service;
+    const values = [nombre, precio, descripcion, imagen,tipo_servicio_id, usuario_id];
+    const query = `INSERT INTO servicios (nombre,precio,imagen,descripcion,tipo_servicio_id,usuario_id) VALUES ($1,$2,$3,$4,$5,$6) `;
     await pool.query(query, values);
   } catch (error) {
     console.log("error al registrar el servicio", error);
@@ -36,12 +36,12 @@ const create = async (service) => {
 
 const updateService = async (id, service) => {
   try {
-    const { nombre, precio, descripcion, tipo_servicio_id, usuario_id } =
+    const { nombre, precio, descripcion, imagen,tipo_servicio_id, usuario_id } =
       service;
     const result = await pool.query(
-      `UPDATE servicios SET nombre = $1, precio = $2, descripcion = $3, tipo_servicio_id = $4, usuario_id = $5
-           WHERE id_servicio = $6 RETURNING *`,
-      [nombre, precio, descripcion, tipo_servicio_id, usuario_id, id]
+      `UPDATE servicios SET nombre = $1, precio = $2, descripcion = $3, imagen = $4,tipo_servicio_id = $5, usuario_id = $6
+           WHERE id_servicio = $7 RETURNING *`,
+      [nombre, precio, descripcion, imagen,tipo_servicio_id, usuario_id, id]
     );
     return result.rows[0];
   } catch (error) {

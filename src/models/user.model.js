@@ -36,9 +36,13 @@ const register = async (user) => {
       fecha_nacimiento,
       correo,
       contrasena,
-      tipo_usuario,
-      profesion,
+      vendedor,
+      oficio,
       direccion,
+      imagen,
+      telefono,
+      experiencia,
+      comuna_id
     } = user;
     const passwordEncriptado = bcrypt.hashSync(contrasena, 10);
     const values = [
@@ -47,11 +51,15 @@ const register = async (user) => {
       fecha_nacimiento,
       correo,
       passwordEncriptado,
-      tipo_usuario,
-      profesion,
+      vendedor,
+      oficio,
       direccion,
+      imagen,
+      telefono,
+      experiencia,
+      comuna_id
     ];
-    const query = `INSERT INTO usuario (rut,nombre,fecha_nacimiento,correo,contrasena,tipo_usuario,profesion,direccion) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`;
+    const query = `INSERT INTO usuario (rut,nombre,fecha_nacimiento,correo,contrasena,vendedor,oficio,direccion,imagen,telefono,experiencia,comuna_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`;
     await pool.query(query, values);
     console.log("usuario registrado");
   } catch (error) {
@@ -82,18 +90,25 @@ const update = async (rut, usuario) => {
       tipo_usuario,
       profesion,
       direccion,
+      imagen,
+      telefono,
+      experiencia,
+      comuna_id
     } = usuario;
     const result = await pool.query(
-      `UPDATE usuario SET nombre = $1, fecha_nacimiento = $2, correo = $3, contrasena = $4, tipo_usuario = $5,profesion =$6,direccion =$7
-       WHERE rut = $8 RETURNING *`,
+      `UPDATE usuario SET nombre = $1, fecha_nacimiento = $2, correo = $3, tipo_usuario = $4,profesion =$5,direccion =$6, imagen=$7, telefono=$8, experencia=$9, comuna_id=$10
+       WHERE rut = $11 RETURNING *`,
       [
         nombre,
         fecha_nacimiento,
         correo,
-        contrasena,
         tipo_usuario,
         profesion,
         direccion,
+        imagen,
+        telefono,
+        experiencia,
+        comuna_id,
         rut,
       ]
     );
