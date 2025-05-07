@@ -7,8 +7,20 @@ CREATE DATABASE servicesmarket;
 
 \c servicesmarket; --conectar con base de datos
 
--- Crear ENUM para tipo_usuario
-CREATE TYPE tipo_usuario_enum AS ENUM ('cliente', 'vendedor');
+
+CREATE TABLE region (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) UNIQUE NOT NULL
+);
+
+-- Tabla de comunas
+CREATE TABLE comuna (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    region_id INTEGER REFERENCES region(id) ON DELETE CASCADE
+);
+
+
 
 CREATE TABLE usuario (
     rut VARCHAR(12) PRIMARY KEY,
@@ -16,9 +28,13 @@ CREATE TABLE usuario (
     fecha_nacimiento DATE,
     correo VARCHAR(100) UNIQUE,
     contrasena VARCHAR(255),
-    tipo_usuario tipo_usuario_enum NOT NULL,
-    profesion VARCHAR(100),
-    direccion VARCHAR(255)
+    tipo_usuario BOOLEAN NOT NULL,
+    oficio VARCHAR(100),
+    direccion VARCHAR(255),
+    imagen VARCHAR(255),
+    telefon VARCHAR(255),
+    experiencia VARCHAR(255),
+    comuna_id INTEGER REFERENCES comuna(id)
 );
 
 -- Crear tipo_servicio
@@ -82,7 +98,9 @@ INSERT INTO usuario (rut, nombre, fecha_nacimiento, correo, contrasena, tipo_usu
 ('22222222-2', 'Carlos Ruiz', '1985-11-10', 'carlos@example.com', 'password123', 'vendedor', 'Electricista', 'Calle 2, Ciudad'),
 ('33333333-3', 'Lucía Gómez', '1993-08-30', 'lucia@example.com', 'password123', 'cliente', NULL, 'Calle 3, Ciudad'),
 ('44444444-4', 'Mario Silva', '1980-02-14', 'mario@example.com', 'password123', 'vendedor', 'Plomero', 'Calle 4, Ciudad'),
-('55555555-5', 'Sofía León', '1995-09-17', 'sofia@example.com', 'password123', 'cliente', NULL, 'Calle 5, Ciudad');
+('55555555-5', 'Sofía León', '1995-09-17', 'sofia@example.com', 'password123', 'cliente', NULL, 'Calle 5, Ciudad'),
+ ('19999999-1',  'Matias Lorenzeti' , '1994-01-29' , 'matias2@example.com' , '$2b$10$2H/eEQL/MaPaLH0Cq/xXmegQ6s3Ozs02u27FIb8QsgCTKwyKHMeK6', 'cliente' 'tecnico' , 'calle falsa 123');
+
 
 
 INSERT INTO tipo_servicio (tipo_servicio) VALUES
@@ -123,3 +141,6 @@ INSERT INTO feedback (puntuacion, comentario, usuario_id, servicio_id) VALUES
 (3, 'Podría mejorar en puntualidad', '55555555-5', 3),
 (5, 'Muy detallistas con la limpieza', '11111111-1', 4),
 (4, 'Reparó mi lavadora en una hora', '33333333-3', 5);
+
+
+

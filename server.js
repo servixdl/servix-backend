@@ -13,6 +13,9 @@ const port = envs.port;
 app.use(cors());
 app.use(express.json());
 app.use("/", routes);
+
+export default app;
+if(process.env.NODE_ENV !== 'test'){
 try {
   app.listen(port, () => {
     console.log(`Servidor corriendo en el puerto: ${port}`);
@@ -22,4 +25,5 @@ try {
   console.error(`Error al iniciar el servidor: ${customError.message}`);
   console.error(error);
   process.exit(1);
+}
 }

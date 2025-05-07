@@ -4,8 +4,7 @@ import { salesModelos } from "../models/sale.model.js";
 
 const getAllSales = async(req,res)=>{
     try{
-        const sales = req.body
-        const information = await salesModelos.getAll(sales) 
+        const information = await salesModelos.getAll() 
         if (!information) return res.status(404).json({ error: 'Ventas no encontrado' });
         res.json(information)  
     }catch(error){
