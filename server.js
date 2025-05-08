@@ -5,7 +5,7 @@ import express from "express";
 import { envs } from "./config/envs.js";
 import { findError } from "./src/utils/find.error.utils.js";
 import cors from "cors";
-import routes from "./src/routes/routes.js";
+import routes from "./routes/routes.js";
 
 const app = express();
 const port = envs.port;
