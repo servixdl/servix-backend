@@ -28,7 +28,7 @@ CREATE TABLE usuario (
     fecha_nacimiento DATE,
     correo VARCHAR(100) UNIQUE,
     contrasena VARCHAR(255),
-    vendedor BOOLEAN,
+    vendedor BOOLEAN NOT NULL,
     oficio VARCHAR(100),
     direccion VARCHAR(255),
     imagen VARCHAR(255),
