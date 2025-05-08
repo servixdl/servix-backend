@@ -2,8 +2,7 @@ import { appointmentModel } from "../models/appointment.model.js"
 
 const getAllAppointment = async(req,res)=>{
     try{
-        const appointments = req.body
-        const information = await appointmentModel.getAll(appointments) 
+        const information = await appointmentModel.getAll() 
         if (!information) return res.status(404).json({ error: 'citas no encontrada' });
         res.json(information)  
     }catch(error){
