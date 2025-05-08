@@ -18,3 +18,4 @@ routes.use('/localities', localityRoutes);
 // routes.get("*", (req, res) => { res.status(404).send("La pagina no existe") });
 
 export default routes;
+
