@@ -1,4 +1,4 @@
-import { transactionControllers } from "../controller/transaction.controller.js";
+import { transactionControllers } from "../src/controller/transaction.controller.js";
 import { Router } from "express";
 const transactionRoute = Router();
 import { verifyToken } from "../middleware/auth.js";

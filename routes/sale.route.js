@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import { salesControllers } from '../src/controller/sale.controller.js';
-import { permission } from '../src/utils/auth.js';
+import { verifyToken} from '../middleware/auth.js';
 
 const salesRoute = Router();
 
