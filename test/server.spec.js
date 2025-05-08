@@ -28,7 +28,7 @@ describe ("CRUD Operation  for diferents routes",()=>{
         })
     })
 
-    describe("POST /user/register",()=>{
+    describe("POST /users/register",()=>{
         it("creating an user that exist",async()=>{
     const user = {
             "rut":"19999999-1",
@@ -36,15 +36,19 @@ describe ("CRUD Operation  for diferents routes",()=>{
             "fecha_nacimiento":"1994-01-29",
             "correo": "matias2@example.com",
             "contrasena": "micontrasena123",
-            "tipo_usuario":"cliente",
-            "profesion":"tecnico",
-            "direccion":"calle falsa 123"
+            "vendedor":"false",
+            "oficio":"tecnico",
+            "direccion":"calle falsa 123",
+            "imagen":"https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
+            "telefono":"987654326",
+            "experiencia":"2 años",
+            "comuna_id":312
 }
     const response = await request(app).post("/users/register").send(user)
     const status = response.statusCode;
     expect(status).toBe(500)
         })
-    })
+    });
 
     
     describe("GET /services/:id",()=>{
