@@ -3,10 +3,10 @@ import Joi from "joi";
 const registerSchema = Joi.object({
   rut: Joi.string().max(12).required(),
   nombre: Joi.string().max(100).required(),
- fecha_nacimiento: Joi.string().required(),
+  fecha_nacimiento: Joi.string().required(),
 
-correo: Joi.string().email().max(100).required(),
-contrasena: Joi.string().max(255).required(),
+ correo: Joi.string().email().max(100).required(),
+ contrasena: Joi.string().max(255).required(),
 
   vendedor: Joi.boolean().optional().label("¿Es vendedor?"),
 
