@@ -15,6 +15,6 @@ userRoute.put("/:rut",verifyToken,userControllers.updateUser)
 
 userRoute.delete("/:rut",verifyToken,userControllers.deleteUser)
 
-userRoute.post("/", createUserMiddleware, userControllers.registerUser)
+userRoute.post("/",createUserMiddleware, userControllers.registerUser)
 
 export default userRoute;

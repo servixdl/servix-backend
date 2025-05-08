@@ -2,28 +2,26 @@ import pool from "../../config/data/conection.db.js";
 import bcrypt from "bcryptjs";
 
 const login = async (correo, contrasenaIngresada) => {
-  console.log(correo);
   try {
     const values = [correo];
     const consulta = "SELECT * FROM usuario WHERE correo = $1";
     const { rows, rowCount } = await pool.query(consulta, values);
+
+    if (rowCount === 0) {
+      throw { code: 401, message: "Usuario no encontrado" };
+    }
+
     const usuario = rows[0];
-
-    //    if (!usuario || rowCount ===0) throw { code: 401, message: "Usuario no encontrado" };
-
     const { contrasena: passwordEncriptada, ...usuarioSinPassword } = usuario;
-    console.log(contrasenaIngresada, passwordEncriptada);
 
-    // const resultado = bcrypt.compareSync(contrasenaIngresada, passwordEncriptada);
-    //console.log(resultado)
-    //if (!resultado || !rowCount) {
-    //   console.log("Contraseña incorrecta o usuario no encontrado");
-    //    throw { code: 401, message: "Email o contraseña incorrecta" };
-    // }
+    const resultado = bcrypt.compareSync(contrasenaIngresada, passwordEncriptada);
+    if (!resultado) {
+      throw { code: 401, message: "Email o contraseña incorrecta" };
+    }
 
     return { user: usuarioSinPassword };
   } catch (error) {
-    console.log("error -->", error);
+    console.log("Error en login:", error);
     throw error;
   }
 };
@@ -44,7 +42,9 @@ const register = async (user) => {
       experiencia,
       comuna_id
     } = user;
+
     const passwordEncriptado = bcrypt.hashSync(contrasena, 10);
+
     const values = [
       rut,
       nombre,
@@ -59,23 +59,32 @@ const register = async (user) => {
       experiencia,
       comuna_id
     ];
-    const query = `INSERT INTO usuario (rut,nombre,fecha_nacimiento,correo,contrasena,vendedor,oficio,direccion,imagen,telefono,experiencia,comuna_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`;
+
+    const query = `
+      INSERT INTO usuario 
+      (rut, nombre, fecha_nacimiento, correo, contrasena, vendedor, oficio, direccion, imagen, telefono, experiencia, comuna_id)
+      VALUES 
+      ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+    `;
+
     await pool.query(query, values);
-    console.log("usuario registrado");
+    console.log("Usuario registrado");
   } catch (error) {
-    console.log("error al registrar usuario", error);
+    console.log("Error al registrar usuario:", error);
     throw error;
   }
 };
 
 const getAll = async () => {
   try {
-    const query =
-      "SELECT rut ,nombre,fecha_nacimiento,correo,tipo_usuario,profesion,direccion FROM usuario";
+    const query = `
+      SELECT rut, nombre, fecha_nacimiento, correo, direccion 
+      FROM usuario
+    `;
     const result = await pool.query(query);
     return result.rows;
   } catch (error) {
-    console.log("error al buscar usuario", error);
+    console.log("Error al obtener usuarios:", error);
     throw error;
   }
 };
@@ -86,58 +95,69 @@ const update = async (rut, usuario) => {
       nombre,
       fecha_nacimiento,
       correo,
-      contrasena,
-      tipo_usuario,
-      profesion,
       direccion,
       imagen,
       telefono,
       experiencia,
       comuna_id
     } = usuario;
+
     const result = await pool.query(
-      `UPDATE usuario SET nombre = $1, fecha_nacimiento = $2, correo = $3, tipo_usuario = $4,profesion =$5,direccion =$6, imagen=$7, telefono=$8, experencia=$9, comuna_id=$10
-       WHERE rut = $11 RETURNING *`,
+      `
+      UPDATE usuario SET 
+        nombre = $1,
+        fecha_nacimiento = $2,
+        correo = $3,
+        direccion = $4,
+        imagen = $5,
+        telefono = $6,
+        experiencia = $7,
+        comuna_id = $8
+      WHERE rut = $9
+      RETURNING *
+      `,
       [
         nombre,
         fecha_nacimiento,
         correo,
-        tipo_usuario,
-        profesion,
         direccion,
         imagen,
         telefono,
         experiencia,
         comuna_id,
-        rut,
+        rut
       ]
     );
+
     return result.rows[0];
   } catch (error) {
-    console.log("error al actualizar usuario", error);
+    console.log("Error al actualizar usuario:", error);
     throw error;
   }
 };
 
 const searchById = async (rut) => {
   try {
-    const query =
-      "SELECT rut,nombre,fecha_nacimiento,correo,tipo_usuario,profesion,direccion FROM usuario WHERE rut = $1";
+    const query = `
+      SELECT rut, nombre, fecha_nacimiento, correo, direccion 
+      FROM usuario 
+      WHERE rut = $1
+    `;
     const result = await pool.query(query, [rut]);
     return result.rows[0];
   } catch (error) {
-    console.log("error al buscar usuario", error);
+    console.log("Error al buscar usuario por RUT:", error);
     throw error;
   }
 };
 
 const destroy = async (rut) => {
   try {
-    const query = "DELETE FROM usuario WHERE rut = $1 RETURNING  *";
+    const query = "DELETE FROM usuario WHERE rut = $1 RETURNING *";
     const result = await pool.query(query, [rut]);
     return result.rows[0];
   } catch (error) {
-    console.log("error al eliminar");
+    console.log("Error al eliminar usuario:", error);
     throw error;
   }
 };

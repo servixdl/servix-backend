@@ -23,12 +23,12 @@ CREATE TABLE comuna (
 
 
 CREATE TABLE usuario (
-    rut VARCHAR(12) PRIMARY KEY,
+    rut VARCHAR(12) PRIMARY KEY,  
     nombre VARCHAR(100),
     fecha_nacimiento DATE,
     correo VARCHAR(100) UNIQUE,
     contrasena VARCHAR(255),
-    vendedor BOOLEAN NOT NULL,
+    vendedor BOOLEAN,
     oficio VARCHAR(100),
     direccion VARCHAR(255),
     imagen VARCHAR(255),
