@@ -50,7 +50,7 @@ const searchByRutSale = async(req,res)=>{
 
 const updateSale = async(req,res)=>{
     try {
-        const id = parseInt(req.params.id)
+        const id = req.params.id
         const sale = await salesModelos.update(id,req.body);
         if (!sale) return res.status(404).json({ error: 'Venta no encontrado' });
         res.json(sale);

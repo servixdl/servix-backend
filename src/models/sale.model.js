@@ -38,11 +38,11 @@ const update = async (id, sale) =>{
         const { usuario_id,servicio_id,fecha_venta,total } = sale;
         const result = await pool.query(
           `UPDATE ventas SET usuario_id = $1, servicio_id = $2, fecha_venta = $3, total = $4 WHERE id_venta = $5 RETURNING *`,
-          [usuario_id,servicio_id,fecha_venta,total, id]
+          [usuario_id,servicio_id,fecha_venta,total, parseInt(id)]
         );
         return result.rows[0];
       } catch (error) {
-        console.log("error al eliminar venta")
+        console.log("error al actualizar venta")
         throw error
     }
 }
