@@ -91,44 +91,31 @@ const getAll = async () => {
 
 const update = async (rut, usuario) => {
   try {
-    const {
-      nombre,
-      fecha_nacimiento,
-      correo,
-      direccion,
-      imagen,
-      telefono,
-      experiencia,
-      comuna_id
-    } = usuario;
+    const campos = [];
+    const valores = [];
+    let i = 1;
 
-    const result = await pool.query(
-      `
-      UPDATE usuario SET 
-        nombre = $1,
-        fecha_nacimiento = $2,
-        correo = $3,
-        direccion = $4,
-        imagen = $5,
-        telefono = $6,
-        experiencia = $7,
-        comuna_id = $8
-      WHERE rut = $9
+    for (const [key, value] of Object.entries(usuario)) {
+      if (value !== undefined) {
+        campos.push(`${key} = $${i}`);
+        valores.push(value);
+        i++;
+      }
+    }
+
+    if (campos.length === 0) {
+      throw new Error("No se enviaron campos para actualizar");
+    }
+
+    valores.push(rut); // el último valor es para el WHERE
+
+    const query = `
+      UPDATE usuario SET ${campos.join(", ")}
+      WHERE rut = $${valores.length}
       RETURNING *
-      `,
-      [
-        nombre,
-        fecha_nacimiento,
-        correo,
-        direccion,
-        imagen,
-        telefono,
-        experiencia,
-        comuna_id,
-        rut
-      ]
-    );
+    `;
 
+    const result = await pool.query(query, valores);
     return result.rows[0];
   } catch (error) {
     console.log("Error al actualizar usuario:", error);
