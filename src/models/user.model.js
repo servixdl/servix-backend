@@ -126,17 +126,54 @@ const update = async (rut, usuario) => {
 const searchById = async (rut) => {
   try {
     const query = `
-      SELECT rut, nombre, fecha_nacimiento, correo, direccion 
-      FROM usuario 
-      WHERE rut = $1
+      SELECT 
+        u.rut, 
+        u.nombre, 
+        u.fecha_nacimiento, 
+        u.correo, 
+        u.direccion,
+        u.telefono,
+        u.vendedor,
+        u.oficio,
+        u.experiencia,
+        u.imagen,
+        c.id AS comuna_id,
+        c.nombre AS comuna_nombre,
+        r.id AS region_id,
+        r.nombre AS region_nombre
+      FROM usuario u
+      LEFT JOIN comuna c ON u.comuna_id = c.id
+      LEFT JOIN region r ON c.region_id = r.id
+      WHERE u.rut = $1
     `;
+
     const result = await pool.query(query, [rut]);
-    return result.rows[0];
+    const row = result.rows[0];
+
+    return {
+      rut: row.rut,
+      nombre: row.nombre,
+      fecha_nacimiento: row.fecha_nacimiento,
+      correo: row.correo,
+      direccion: row.direccion,
+      telefono: row.telefono,
+      vendedor: row.vendedor,
+      oficio: row.oficio,
+      experiencia: row.experiencia,
+      imagen: row.imagen,
+      comuna: {
+        id: row.comuna_id,
+        nombre: row.comuna_nombre,
+        region_id: row.region_id,
+        region_nombre: row.region_nombre
+      }
+    };
   } catch (error) {
     console.log("Error al buscar usuario por RUT:", error);
     throw error;
   }
 };
+
 
 const destroy = async (rut) => {
   try {
