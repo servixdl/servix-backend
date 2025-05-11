@@ -86,6 +86,24 @@ const searchByIdUser = async (req, res) => {
     }
 }
 
+const deleteUserImage = async (req, res) => {
+  try {
+    const rut = req.params.rut;
+
+
+    const consulta = await usermodel.update(rut, { imagen: null });
+
+    if (!consulta) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    res.status(200).json({ message: "Imagen eliminada correctamente" });
+  } catch (error) {
+    console.error("Error al eliminar imagen:", error);
+    res.status(500).json({ error: "Error al eliminar imagen" });
+  }
+};
+
 const deleteUser = async (req, res) => {
     try {
         const rut = req.params.rut
@@ -97,4 +115,4 @@ const deleteUser = async (req, res) => {
     }
 }
 
-export const userControllers = { loginUser, registerUser, searchByIdUser, deleteUser, getAllUser, updateUser }
+export const userControllers = { loginUser, registerUser, searchByIdUser, deleteUser, getAllUser, updateUser, deleteUserImage }
