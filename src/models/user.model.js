@@ -186,6 +186,8 @@ const destroy = async (rut) => {
   }
 };
 
+
+
 export const usermodel = {
   register,
   login,
@@ -193,4 +195,5 @@ export const usermodel = {
   destroy,
   getAll,
   update,
+ 
 };

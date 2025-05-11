@@ -18,4 +18,6 @@ userRoute.delete("/:rut",verifyToken,userControllers.deleteUser)
 
 userRoute.post("/",createUserMiddleware, userControllers.registerUser)
 
+userRoute.delete("/:rut/imagen", verifyToken, userControllers.deleteUserImage); // 
+
 export default userRoute;

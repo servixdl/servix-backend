@@ -42,11 +42,11 @@ describe ("CRUD Operation  for diferents routes",()=>{
 
     describe("GET /appointments",()=>{
         it("should access with valid token",async ()=>{
-            const response = await await request(app).get("/appointments")
+            const response =  await request(app).get("/appointments")
             .set("Authorization", `Bearer ${token}`).send();
             const status =response.statusCode;
             expect(status).toBe(200);
         })
     });
 
-});
+})
