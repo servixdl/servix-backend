@@ -34,25 +34,35 @@ const registerUser = async (req, res) => {
     }
 }
 const updateUser = async (req, res) => {
-    try {
-        const rut = req.params.rut;
-        const usuario = {
-            ...req.body,
-            imagen: req.file?.filename || null
-        };
+  try {
+    const rut = req.params.rut;
 
-        const consulta = await usermodel.update(rut, usuario);
+    // Obtener los datos del cuerpo y añadir la imagen si se subió
+    const datosActualizados = {
+      ...req.body,
+      imagen: req.file?.filename,
+    };
 
-        if (!consulta) {
-            return res.status(404).json({ error: "Usuario no encontrado" });
-        }
+    // Filtrar campos vacíos (que no llegaron)
+    Object.keys(datosActualizados).forEach((key) => {
+      if (datosActualizados[key] === undefined || datosActualizados[key] === "") {
+        delete datosActualizados[key];
+      }
+    });
 
-        res.json({ message: "Usuario actualizado correctamente", usuario: consulta });
-    } catch (error) {
-        console.error("Error en controlador updateUser:", error);
-        res.status(500).json({ error: "Error al actualizar usuario" });
+    const consulta = await usermodel.update(rut, datosActualizados);
+
+    if (!consulta) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
     }
+
+    res.json({ message: "Usuario actualizado correctamente", usuario: consulta });
+  } catch (error) {
+    console.error("Error en controlador updateUser:", error);
+    res.status(500).json({ error: "Error al actualizar usuario" });
+  }
 };
+
 const getAllUser = async (req, res) => {
     try {
         const consulta = await usermodel.getAll()
