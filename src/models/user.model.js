@@ -174,6 +174,12 @@ const searchById = async (rut) => {
   }
 };
 
+const findRutOnly = async (rut) => {
+  const query = `SELECT rut FROM usuario WHERE rut = $1`;
+  const result = await pool.query(query, [rut]);
+  return result.rows[0];
+};
+
 
 const destroy = async (rut) => {
   try {
@@ -194,6 +200,7 @@ export const usermodel = {
   searchById,
   destroy,
   getAll,
+  findRutOnly,
   update,
  
 };
