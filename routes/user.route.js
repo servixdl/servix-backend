@@ -16,6 +16,6 @@ userRoute.put("/:rut", verifyToken, upload.single("imagen"), userControllers.upd
 
 userRoute.delete("/:rut",verifyToken,userControllers.deleteUser)
 
-userRoute.post("/register",createUserMiddleware, userControllers.registerUser)
++userRoute.post("/",createUserMiddleware, userControllers.registerUser)
 
 export default userRoute;
