@@ -44,12 +44,12 @@ const create = async (service) => {
 
 const updateService = async (id, service) => {
   try {
-    const { nombre, precio, descripcion, imagen,tipo_servicio_id, usuario_id } =
+    const { nombre, precio, descripcion, imagen } =
       service;
     const result = await pool.query(
-      `UPDATE servicios SET nombre = $1, precio = $2, descripcion = $3, imagen = $4,tipo_servicio_id = $5, usuario_id = $6
-           WHERE id_servicio = $7 RETURNING *`,
-      [nombre, precio, descripcion, imagen,tipo_servicio_id, usuario_id, id]
+      `UPDATE servicios SET nombre = $1, precio = $2, descripcion = $3, imagen = $4
+           WHERE id_servicio = $5 RETURNING *`,
+      [nombre, precio, descripcion, imagen, id]
     );
     return result.rows[0];
   } catch (error) {
