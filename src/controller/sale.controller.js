@@ -18,17 +18,16 @@ const getAllSales = async (req, res) => {
 };
 
 
-const getByIdSale = async(req,res)=>{
-    try {
-        const id = req.params.id;
-      const sale = await salesModelos.getById(id);
-      if (!sale) return res.status(404).json({ error: 'Venta no encontrado' });
-      res.json(sale);
-    } catch (error) {
-        res.status(500).json({ error: 'Error al obtener la venta' });
-    }
-}
-
+const getByIdSale = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const sale = await salesModelos.getById(id);
+    if (!sale) return res.status(404).json({ error: 'prestador  no encontrado' });
+    res.json(sale);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener la venta' });
+  }
+};
 
 const createSale = async(req,res)=>{
     try {

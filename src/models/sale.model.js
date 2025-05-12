@@ -19,7 +19,7 @@ const getAll = async () => {
 
 const getById = async(id)=>{
     try {
-        const query = `SELECT * FROM ventas WHERE id_venta = $1`
+        const query = `SELECT rut, nombre, imagen, oficio, experiencia  FROM usuario WHERE rut = $1`
         const result = await pool.query(query,[id])
         return result.rows[0]
     } catch (error) {
