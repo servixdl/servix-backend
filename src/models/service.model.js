@@ -21,6 +21,15 @@ const getById = async (id_servicio) => {
     console.log("error al obtener servicio");
   }
 };
+const getByRut = async (usuario_id) => {
+  try {
+    const query = "SELECT * FROM servicios WHERE usuario_id = $1";
+    const result = await pool.query(query, [usuario_id]);
+    return result.rows;
+  } catch (error) {
+    console.log("error al obtener servicio");
+  }
+};
 
 const create = async (service) => {
   try {
@@ -79,4 +88,5 @@ export const servicieModel = {
   getById,
   getByName,
   updateService,
+  getByRut
 };
