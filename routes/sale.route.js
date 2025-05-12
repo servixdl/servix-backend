@@ -6,7 +6,7 @@ const salesRoute = Router();
 
 salesRoute.post("/", verifyToken, salesControllers.createSale);
 
-salesRoute.get("/", salesControllers.getAllSales);
+salesRoute.get("/", verifyToken, salesControllers.getAllSales);
 
 salesRoute.get("/seller/:rut", verifyToken, salesControllers.searchByRutSale);
 

@@ -6,7 +6,7 @@ const getAllServices = async (req, res) => {
     if (!information || information.length === 0)
       return res.status(404).json({ error: "Servicio no encontrado" });
 
-    res.json(information);
+     res.status(200).json(information);
   } catch (error) {
     console.error("Error en getAllServices:", error);
     res.status(500).json({ error: "Error al obtener el servicio" });

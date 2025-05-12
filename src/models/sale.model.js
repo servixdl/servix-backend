@@ -2,16 +2,12 @@ import pool from "../../config/data/conection.db.js"
 
 const getAll = async () => {
   try {
-    const query = `
-      SELECT rut, nombre, imagen, oficio, experiencia
-      FROM usuario
-      WHERE vendedor = true
-      LIMIT 12
-    `;
+    const query = "SELECT * FROM servicios";
     const { rows: result } = await pool.query(query);
+    console.log("Servicios encontrados:", result);
     return result;
   } catch (error) {
-    console.log("Error al obtener vendedores");
+    console.error("Error al obtener servicios:", error);
     throw error;
   }
 };
