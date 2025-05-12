@@ -1,15 +1,21 @@
 import pool from "../../config/data/conection.db.js"
 
-const getAll = async()=>{
-    try{
-        const query = 'SELECT * FROM ventas';
-        const {rows: result} = await pool.query(query);
-        return result;
-    }catch(error){
-        console.log("error al obtener venta ")
-        throw error
-    }
-}
+const getAll = async () => {
+  try {
+    const query = `
+      SELECT rut, nombre, imagen, oficio, experiencia
+      FROM usuario
+      WHERE vendedor = true
+      LIMIT 12
+    `;
+    const { rows: result } = await pool.query(query);
+    return result;
+  } catch (error) {
+    console.log("Error al obtener vendedores");
+    throw error;
+  }
+};
+
 
 const getById = async(id)=>{
     try {
