@@ -2,16 +2,21 @@ import { salesModelos } from "../models/sale.model.js";
 
 
 
-const getAllSales = async(req,res)=>{
-    try{
-        const information = await salesModelos.getAll() 
-        if (!information) return res.status(404).json({ error: 'Ventas no encontrado' });
-        res.json(information)  
-    }catch(error){
-        res.status(500).json({ error: 'Error al obtener las ventas' });
-        console.log("error al cargar las ventas")}
+const getAllSales = async (req, res) => {
+  try {
+    const sales = await salesModelos.getAll();
 
-}
+    if (!sales || sales.length === 0) {
+      return res.status(404).json({ error: 'No se encontraron ventas.' });
+    }
+
+    res.status(200).json(sales);
+  } catch (error) {
+    console.error("Error al cargar las ventas:", error.message);
+    res.status(500).json({ error: 'Error interno al obtener las ventas.' });
+  }
+};
+
 
 const getByIdSale = async(req,res)=>{
     try {

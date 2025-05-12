@@ -8,7 +8,7 @@ const userRoute = Router()
 
 userRoute.post("/login", userControllers.loginUser)
 
-userRoute.get("/",verifyToken,userControllers.getAllUser)
+userRoute.get("/", verifyToken, userControllers.getAllUser);
 
 userRoute.get("/:rut",verifyToken,userControllers.searchByIdUser)
 
