@@ -24,6 +24,17 @@ const getByIdService = async (req, res) => {
     res.status(500).json({ error: "Error al obtener el servicio" });
   }
 };
+const getByIdRut = async (req, res) => {
+  try {
+    const rut = req.params.rut;
+    const service = await servicieModel.getByRut(rut);
+    if (!service)
+      return res.status(404).json({ error: "Servicios no encontrado" });
+    res.json(service);
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener los servicios" });
+  }
+};
 
 const createService = async (req, res) => {
   try {
@@ -78,4 +89,5 @@ export const serviceController = {
   updateService,
   searchByNameService,
   getAllServices,
+  getByIdRut
 };
