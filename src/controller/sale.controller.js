@@ -32,13 +32,13 @@ const getByIdSale = async (req, res) => {
 const createSale = async(req,res)=>{
     try {
     const information = req.body
-    await salesModelos.create(information)
-     res.status(201).send("Venta Realizada");
-    } catch (error) {
+    const id_venta = await salesModelos.create(information)
+     res.status(201).send({message:"Venta Realizada",id_venta});
+    } catch (error) {}
         res.status(500).send(error)
     console.log("error al crear venta")
     }
-}
+
 
 const searchByRutSale = async(req,res)=>{
     try {

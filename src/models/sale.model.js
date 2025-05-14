@@ -27,8 +27,10 @@ const create = async(sale)=>{
     try{
         let {usuario_id,servicio_id,fecha_venta,total} = sale;
         const values = [usuario_id,servicio_id,fecha_venta,total]
-        const query =`INSERT INTO ventas (usuario_id,servicio_id,fecha_venta,total) VALUES ($1,$2,$3,$4) `    
-        await pool.query(query,values)
+        const query =`INSERT INTO ventas (usuario_id,servicio_id,fecha_venta,total) VALUES ($1,$2,$3,$4) RETURNING id_venta`    
+        const response = await pool.query(query,values);
+        const {id_venta} = response.rows[0]
+        return id_venta
     }catch(error){
         console.log("error al registrar la venta",error)
         throw error;
