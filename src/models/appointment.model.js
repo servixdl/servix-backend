@@ -15,8 +15,10 @@ const create = async(information)=>{
     try{
         let {venta_id,fecha_cita,hora_inicio,hora_termino,estado,usuario_id} = information;
         const values = [venta_id,fecha_cita,hora_inicio,hora_termino,estado,usuario_id]
-        const query =`INSERT INTO citas (venta_id,fecha_cita,hora_inicio,hora_termino,estado,usuario_id) VALUES ($1,$2,$3,$4,$5,$6)`    
-        await pool.query(query,values)
+        const query =`INSERT INTO citas (venta_id,fecha_cita,hora_inicio,hora_termino,estado,usuario_id) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id_cita`    
+        const response = await pool.query(query,values)
+        const {id_cita} = response.rows[0]
+        return id_cita
     }catch(error){
         console.log("error al registrar la cita",error)
         throw error;
