@@ -14,7 +14,10 @@ const login = async (correo, contrasenaIngresada) => {
     const usuario = rows[0];
     const { contrasena: passwordEncriptada, ...usuarioSinPassword } = usuario;
 
-    const resultado = bcrypt.compareSync(contrasenaIngresada, passwordEncriptada);
+    const resultado = bcrypt.compareSync(
+      contrasenaIngresada,
+      passwordEncriptada
+    );
     if (!resultado) {
       throw { code: 401, message: "Email o contraseña incorrecta" };
     }
@@ -40,7 +43,7 @@ const register = async (user) => {
       imagen,
       telefono,
       experiencia,
-      comuna_id
+      comuna_id,
     } = user;
 
     const passwordEncriptado = bcrypt.hashSync(contrasena, 10);
@@ -57,7 +60,7 @@ const register = async (user) => {
       imagen,
       telefono,
       experiencia,
-      comuna_id
+      comuna_id,
     ];
 
     const query = `
@@ -133,7 +136,6 @@ const searchById = async (rut) => {
         u.correo, 
         u.direccion,
         u.telefono,
-        u.vendedor,
         u.oficio,
         u.experiencia,
         u.imagen,
@@ -150,6 +152,12 @@ const searchById = async (rut) => {
     const result = await pool.query(query, [rut]);
     const row = result.rows[0];
 
+    const serviceResult = await pool.query(
+      "SELECT COUNT(*) FROM servicios WHERE usuario_id = $1",
+      [rut]
+    );
+    const vendedor = parseInt(serviceResult.rows[0].count, 10) > 0;
+
     return {
       rut: row.rut,
       nombre: row.nombre,
@@ -157,7 +165,7 @@ const searchById = async (rut) => {
       correo: row.correo,
       direccion: row.direccion,
       telefono: row.telefono,
-      vendedor: row.vendedor,
+      vendedor,
       oficio: row.oficio,
       experiencia: row.experiencia,
       imagen: row.imagen,
@@ -165,8 +173,8 @@ const searchById = async (rut) => {
         id: row.comuna_id,
         nombre: row.comuna_nombre,
         region_id: row.region_id,
-        region_nombre: row.region_nombre
-      }
+        region_nombre: row.region_nombre,
+      },
     };
   } catch (error) {
     console.log("Error al buscar usuario por RUT:", error);
@@ -180,7 +188,6 @@ const findRutOnly = async (rut) => {
   return result.rows[0];
 };
 
-
 const destroy = async (rut) => {
   try {
     const query = "DELETE FROM usuario WHERE rut = $1 RETURNING *";
@@ -192,8 +199,6 @@ const destroy = async (rut) => {
   }
 };
 
-
-
 export const usermodel = {
   register,
   login,
@@ -202,5 +207,4 @@ export const usermodel = {
   getAll,
   findRutOnly,
   update,
- 
 };
