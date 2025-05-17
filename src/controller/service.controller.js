@@ -6,7 +6,7 @@ const getAllServices = async (req, res) => {
     if (!information || information.length === 0)
       return res.status(404).json({ error: "Servicio no encontrado" });
 
-     res.status(200).json(information);
+    res.status(200).json(information);
   } catch (error) {
     console.error("Error en getAllServices:", error);
     res.status(500).json({ error: "Error al obtener el servicio" });
@@ -39,8 +39,8 @@ const getByIdRut = async (req, res) => {
 const createService = async (req, res) => {
   try {
     const service = req.body;
-    await servicieModel.create(service);
-    res.status(201).send("Servicio registrado");
+    const created = await servicieModel.create(service);
+    res.status(201).json(created);
   } catch (error) {
     res.status(500).send(error);
     console.log("error al crear servicio");
@@ -89,5 +89,5 @@ export const serviceController = {
   updateService,
   searchByNameService,
   getAllServices,
-  getByIdRut
+  getByIdRut,
 };
