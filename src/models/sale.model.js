@@ -2,12 +2,11 @@ import pool from "../../config/data/conection.db.js"
 
 const getAll = async () => {
   try {
-    const query = "SELECT * FROM servicios";
+    const query = "SELECT * FROM ventas";
     const { rows: result } = await pool.query(query);
-    console.log("Servicios encontrados:", result);
     return result;
   } catch (error) {
-    console.error("Error al obtener servicios:", error);
+    console.error("Error al obtener ventas:", error);
     throw error;
   }
 };
@@ -15,7 +14,7 @@ const getAll = async () => {
 
 const getById = async(id)=>{
     try {
-        const query = `SELECT rut, nombre, imagen, oficio, experiencia  FROM usuario WHERE rut = $1`
+        const query = `SELECT *  FROM ventas WHERE id_venta = $1`
         const result = await pool.query(query,[id])
         return result.rows[0]
     } catch (error) {

@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
+import bodyParser from 'body-parser';
 
 import express from "express";
 import { envs } from "./config/envs.js";
@@ -12,6 +13,7 @@ const port = envs.port;
 
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/uploads', express.static('uploads'));
 app.use("/", routes);
 
