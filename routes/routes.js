@@ -6,8 +6,12 @@ import appointmentRoute from "./appointment.route.js";
 import transactionRoute from './transaction.route.js';
 import localityRoutes from './locality.route.js';
 import typeServiceRoute from './typeServices.router.js';
+<<<<<<< HEAD
 import ServiSoliRoute from './ServiSolic.router.js';
 
+=======
+import transbankRouter from './transbank.route.js';
+>>>>>>> develop
 const routes = Router();
 
 routes.use('/appointments', appointmentRoute);
@@ -17,8 +21,12 @@ routes.use('/sales', saleRoute);
 routes.use('/transactions', transactionRoute);
 routes.use('/localities', localityRoutes);
 routes.use('/types_services',typeServiceRoute)
+<<<<<<< HEAD
 routes.use('/ServiSolicitados',ServiSoliRoute)
 
+=======
+routes.use('/webpay',transbankRouter)
+>>>>>>> develop
 // routes.get("*", (req, res) => { res.status(404).send("La pagina no existe") });
 
 export default routes;
