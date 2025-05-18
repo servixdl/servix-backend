@@ -34,7 +34,7 @@ const create = async (service) => {
   try {
     let { nombre, precio, descripcion, imagen,tipo_servicio_id, usuario_id } = service;
     const values = [nombre, precio, descripcion, imagen,tipo_servicio_id, usuario_id];
-    const query = `INSERT INTO servicios (nombre,precio,imagen,descripcion,tipo_servicio_id,usuario_id) VALUES ($1,$2,$3,$4,$5,$6) `;
+    const query = `INSERT INTO servicios (nombre,precio,descripcion,imagen,tipo_servicio_id,usuario_id) VALUES ($1,$2,$3,$4,$5,$6) `;
     await pool.query(query, values);
   } catch (error) {
     console.log("error al registrar el servicio", error);

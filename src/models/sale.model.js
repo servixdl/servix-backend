@@ -2,12 +2,11 @@ import pool from "../../config/data/conection.db.js"
 
 const getAll = async () => {
   try {
-    const query = "SELECT * FROM servicios";
+    const query = "SELECT * FROM ventas";
     const { rows: result } = await pool.query(query);
-    console.log("Servicios encontrados:", result);
     return result;
   } catch (error) {
-    console.error("Error al obtener servicios:", error);
+    console.error("Error al obtener ventas:", error);
     throw error;
   }
 };
@@ -15,7 +14,7 @@ const getAll = async () => {
 
 const getById = async(id)=>{
     try {
-        const query = `SELECT rut, nombre, imagen, oficio, experiencia  FROM usuario WHERE rut = $1`
+        const query = `SELECT *  FROM ventas WHERE id_venta = $1`
         const result = await pool.query(query,[id])
         return result.rows[0]
     } catch (error) {
@@ -27,8 +26,10 @@ const create = async(sale)=>{
     try{
         let {usuario_id,servicio_id,fecha_venta,total} = sale;
         const values = [usuario_id,servicio_id,fecha_venta,total]
-        const query =`INSERT INTO ventas (usuario_id,servicio_id,fecha_venta,total) VALUES ($1,$2,$3,$4) `    
-        await pool.query(query,values)
+        const query =`INSERT INTO ventas (usuario_id,servicio_id,fecha_venta,total) VALUES ($1,$2,$3,$4) RETURNING id_venta`    
+        const response = await pool.query(query,values);
+        const {id_venta} = response.rows[0]
+        return id_venta
     }catch(error){
         console.log("error al registrar la venta",error)
         throw error;

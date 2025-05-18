@@ -24,11 +24,12 @@ const getByIdAppointment = async(req,res)=>{
 const createAppointment = async(req,res)=>{
     try {
         const appointment = req.body
-    await appointmentModel.create(appointment)
-     res.status(201).send("Cita registrado");
+    const id_cita = await appointmentModel.create(appointment)
+     res.status(201).send({message:"Cita registrado",id_cita});
     } catch (error) {
-        res.status(500).send(error)
-    console.log("error al crear Cita")
+       console.log("error al crear Cita",error)
+        res.status(500).json({message:"error al crear la venta"})
+    
     }
 }
 

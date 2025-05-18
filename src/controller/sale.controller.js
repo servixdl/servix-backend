@@ -22,7 +22,7 @@ const getByIdSale = async (req, res) => {
   try {
     const id = req.params.id;
     const sale = await salesModelos.getById(id);
-    if (!sale) return res.status(404).json({ error: 'prestador  no encontrado' });
+    if (!sale) return res.status(404).json({ error: 'venta  no encontrada' });
     res.json(sale);
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener la venta' });
@@ -32,13 +32,14 @@ const getByIdSale = async (req, res) => {
 const createSale = async(req,res)=>{
     try {
     const information = req.body
-    await salesModelos.create(information)
-     res.status(201).send("Venta Realizada");
-    } catch (error) {
-        res.status(500).send(error)
-    console.log("error al crear venta")
+    const id_venta = await salesModelos.create(information)
+     res.status(201).send({message:"Venta Realizada",id_venta});
+    } catch (error) {}
+    console.log("error al crear venta",error)
+        res.status(500).json({message:"error al crear la venta"})
+    
     }
-}
+
 
 const searchByRutSale = async(req,res)=>{
     try {

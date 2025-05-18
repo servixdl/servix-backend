@@ -1,4 +1,3 @@
-
 --psql -U postgres  
 --postgres en este caso es el nomnbre del usuario para ingresar a la base de datos          
 
@@ -93,6 +92,27 @@ CREATE TABLE feedback (
     FOREIGN KEY (usuario_id) REFERENCES usuario(rut),
     FOREIGN KEY (servicio_id) REFERENCES servicios(id_servicio)
 );
+
+
+--Crear tablas que guarden los datos de la compra
+
+CREATE TABLE venta_provisoria (
+    buyOrder VARCHAR(50) PRIMARY KEY,
+    usuario_id VARCHAR(12),
+    servicio_id INT,
+    fecha_venta DATE,
+    total NUMERIC(10,2),
+    fecha_cita DATE,
+    hora_inicio TIME,
+    hora_termino TIME,
+    estado estado_cita_enum DEFAULT 'pendiente'
+);
+ 
+
+
+
+
+
 
 --IMPORTANTE!!
 --insertar las regiones y comunas del archivo regionComuna.sql
