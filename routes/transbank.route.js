@@ -106,7 +106,6 @@ transbankRouter.get("/retorno", async (req, res) => {
       estado,
     });
 
-    console.log("CITA CREADA:", cita);
 
     res.redirect(
       // `http://localhost:5173/salePay?venta_id=${id_venta}&cita_id=${id_cita}`
