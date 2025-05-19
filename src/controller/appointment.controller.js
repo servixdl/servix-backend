@@ -24,7 +24,7 @@ const getByIdAppointment = async(req,res)=>{
 const createAppointment = async(req,res)=>{
     try {
         const appointment = req.body
-    const id_cita = await appointmentModel.create(appointment)
+        const id_cita = await appointmentModel.create(appointment)
      res.status(201).send({message:"Cita registrado",id_cita});
     } catch (error) {
        console.log("error al crear Cita",error)
@@ -41,6 +41,18 @@ const updateAppointment = async(req,res)=>{
         res.json(appoinment);
     } catch (error) {
         res.status(500).json({error:'Error al actualizar servicio'})
+    }
+}
+
+
+const updateAppointmentCancel = async(req,res)=>{
+    try {
+        const id = parseInt(req.params.id)
+        const appoinment = await appointmentModel.updateCancel(id);
+        if (!appoinment) return res.status(404).json({ error: 'appointment no encontrado' });
+        res.json(appoinment);
+    } catch (error) {
+        res.status(500).json({error:'Error al cancelar servicio'})
     }
 }
 const searchByRutAppointment = async(req,res)=>{
@@ -65,4 +77,4 @@ try{
 }
 }
 
-export const appointmentController = {getAllAppointment,getByIdAppointment,createAppointment,updateAppointment,deleteAppointment,searchByRutAppointment}
+export const appointmentController = {getAllAppointment,getByIdAppointment,createAppointment,updateAppointment,deleteAppointment,searchByRutAppointment,updateAppointmentCancel}
