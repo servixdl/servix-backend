@@ -114,7 +114,7 @@ transbankRouter.get("/retorno", async (req, res) => {
   } catch (error) {
     console.error(error);
     // res.redirect("http://localhost:5173/error-pago");
-    res.redirect("https://servix-backend.onrender.com/error-pago");
+    res.redirect("https://servix.netlify.app/error-pago");
   }
 });
 
