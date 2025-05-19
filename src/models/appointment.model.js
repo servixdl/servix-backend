@@ -11,21 +11,17 @@ const getAll = async () => {
   }
 };
 
-const create = async (service) => {
+const create = async (cita) => {
   try {
-    let { nombre, precio, descripcion, imagen, tipo_servicio_id, usuario_id } =
-      service;
+    let {  venta_id, fecha_cita, hora_inicio, hora_termino, usuario_id,estado } =
+      cita;
     const values = [
-      nombre,
-      precio,
-      descripcion,
-      imagen,
-      tipo_servicio_id,
-      usuario_id,
+        venta_id, fecha_cita, hora_inicio, hora_termino, usuario_id,estado 
     ];
-    const query = `INSERT INTO servicios (nombre,precio,descripcion,imagen,tipo_servicio_id,usuario_id) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *`;
-    const result = await pool.query(query, values);
-    return result.rows[0];
+    const query = `INSERT INTO citas (venta_id, fecha_cita, hora_inicio, hora_termino, usuario_id,estado ) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id_cita`;
+    const response = await pool.query(query,values);
+        const {id_cita} = response.rows[0]
+        return id_cita
   } catch (error) {
     console.log("error al registrar el servicio", error);
     throw error;
