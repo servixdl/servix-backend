@@ -12,7 +12,6 @@ if (process.env.NODE_ENV === "production") {
     password: envs.pass_db_prod,
     database: envs.data_db_prod,
     allowExitOnIdle: true,
-    // ssl: { rejectUnauthorized: false },
   };
 } else {
   poolConfig = {
@@ -24,7 +23,10 @@ if (process.env.NODE_ENV === "production") {
   };
 }
 
-const pool = new Pool(poolConfig);
+const pool = new Pool({
+  ...poolConfig,
+  ssl: { rejectUnauthorized: false },
+});
 
 pool
   .connect()
