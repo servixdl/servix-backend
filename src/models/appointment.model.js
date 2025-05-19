@@ -44,6 +44,14 @@ const update = async (id, information) => {
   return result.rows[0];
 };
 
+const updateCancel = async (id) => {
+try{
+  const result = await pool.query( `UPDATE citas SET estado = 'cancelada'  WHERE id_cita = $1 RETURNING *`,[id]);
+  return result.rows[0];
+}catch(error){console.log("error al cancelar cita",error)}
+
+};
+
 const deleteAppointment = async (id) => {
   try {
     const query = `DELETE FROM citas WHERE id_cita = $1 RETURNING  *`;
@@ -85,4 +93,5 @@ export const appointmentModel = {
   deleteAppointment,
   update,
   create,
+  updateCancel
 };

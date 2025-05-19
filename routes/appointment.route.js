@@ -16,6 +16,8 @@ appointmentRoute.put("/:id",verifyToken,appointmentController.updateAppointment)
 
 appointmentRoute.delete("/:id",verifyToken,appointmentController.deleteAppointment)
 
+appointmentRoute.put("/cancel/:id",verifyToken,appointmentController.updateAppointmentCancel)
+
 export default appointmentRoute;
 
 

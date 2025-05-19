@@ -43,6 +43,18 @@ const updateAppointment = async(req,res)=>{
         res.status(500).json({error:'Error al actualizar servicio'})
     }
 }
+
+
+const updateAppointmentCancel = async(req,res)=>{
+    try {
+        const id = parseInt(req.params.id)
+        const appoinment = await appointmentModel.updateCancel(id);
+        if (!appoinment) return res.status(404).json({ error: 'appointment no encontrado' });
+        res.json(appoinment);
+    } catch (error) {
+        res.status(500).json({error:'Error al cancelar servicio'})
+    }
+}
 const searchByRutAppointment = async(req,res)=>{
     try {
         const rut = req.params.rut
@@ -65,4 +77,4 @@ try{
 }
 }
 
-export const appointmentController = {getAllAppointment,getByIdAppointment,createAppointment,updateAppointment,deleteAppointment,searchByRutAppointment}
+export const appointmentController = {getAllAppointment,getByIdAppointment,createAppointment,updateAppointment,deleteAppointment,searchByRutAppointment,updateAppointmentCancel}
