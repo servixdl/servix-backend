@@ -109,7 +109,7 @@ transbankRouter.get("/retorno", async (req, res) => {
 
     res.redirect(
       // `http://localhost:5173/salePay?venta_id=${id_venta}&cita_id=${id_cita}`
-      `https://servix-backend.onrender.com/salePay?venta_id=${id_venta}&cita_id=${cita.id_cita}`
+      `https://servix.netlify.app/salePay?venta_id=${id_venta}&cita_id=${cita.id_cita}`
     );
   } catch (error) {
     console.error(error);
