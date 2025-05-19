@@ -76,6 +76,7 @@ transbankRouter.get("/retorno", async (req, res) => {
   }
   try {
     const result = await transaction.commit(token);
+    console.log("RESULTADO TRANSBANK:", result);
     const { buy_order, amount, status } = result;
     const ventaProvisional = await transactionModelos.getByOrder(buy_order);
     console.log(ventaProvisional);
@@ -95,7 +96,7 @@ transbankRouter.get("/retorno", async (req, res) => {
       fecha_venta,
       total,
     });
-    const id_cita = await appointmentModel.create({
+    const cita = await appointmentModel.create({
       id_venta,
       fecha_cita,
       hora_inicio,
@@ -104,13 +105,16 @@ transbankRouter.get("/retorno", async (req, res) => {
       estado,
     });
 
+    console.log("CITA CREADA:", cita);
+
     res.redirect(
       // `http://localhost:5173/salePay?venta_id=${id_venta}&cita_id=${id_cita}`
-      `https://servix-backend.onrender.com/salePay?venta_id=${id_venta}&cita_id=${id_cita}`
+      `https://servix.netlify.app/salePay?venta_id=${id_venta}&cita_id=${cita.id_cita}`
     );
   } catch (error) {
     console.error(error);
-    res.redirect("http://localhost:5173/error-pago");
+    // res.redirect("http://localhost:5173/error-pago");
+    res.redirect("https://servix.netlify.app/error-pago");
   }
 });
 
